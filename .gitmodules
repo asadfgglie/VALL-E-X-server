@@ -1,0 +1,3 @@
+[submodule "vall_e_x"]
+	path = vall_e_x
+	url = https://github.com/Plachtaa/VALL-E-X.git
