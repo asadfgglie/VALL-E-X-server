@@ -58,4 +58,4 @@ if __name__ == "__main__":
     logging.info('Loading model...')
     preload_models()
     logging.info('model loaded done.')
-    uvicorn.run(app, host="0.0.0.0")
+    uvicorn.run(app, host="0.0.0.0", port=5000)
