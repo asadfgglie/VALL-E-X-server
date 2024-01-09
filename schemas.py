@@ -1,5 +1,4 @@
-from pathlib import Path
-from typing import Literal, Union
+from typing import Literal, Optional
 
 from pydantic import BaseModel
 
@@ -7,8 +6,17 @@ from pydantic import BaseModel
 class SynthesizeQuery(BaseModel):
     lang: Literal['auto', 'zh', 'ja', 'en', 'mix'] = 'auto'
     text: str
-    accent: Literal['zh', 'ja', 'en', 'no-accent'] = 'no-accent'
-    prompt: Union[Path, str, None] = None
+    accent: Literal['中文', '日本語', 'English', 'Mix', 'no-accent'] = 'no-accent'
+    prompt_name: Optional[str] = None
 
 class SynthesizeQueryResult(BaseModel):
-    base64_data: str
+    base64_audio: str
+
+class MakePromptQuery(BaseModel):
+    prompt_name: str
+    base64_audio: str
+    transcript: Optional[str] = None
+
+class MakePromptResult(BaseModel):
+    result: Literal['success', 'failed']
+    prompt_name: str
