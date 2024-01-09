@@ -1,6 +1,6 @@
 import base64
 import logging
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 import os
 os.chdir(os.getcwd() + '/vall_e_x')
 import time
