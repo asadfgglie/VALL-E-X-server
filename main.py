@@ -10,6 +10,7 @@ import time
 import numpy as np
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from scipy.io.wavfile import write
 
 from schemas import SynthesizeQuery, SynthesizeQueryResult, MakePromptQuery, MakePromptResult, SynthesizeLongQuery
@@ -31,8 +32,7 @@ def synthesize(query: SynthesizeQuery):
         data = (generate_audio(query.text, query.prompt_name, query.lang, query.accent) * 32767).astype(np.int16)
         write('output.wav', SAMPLE_RATE, data)
         logging.info(f'Time cost: {time.time() - t1}')
-        with open('output.wav', 'rb') as f:
-            return SynthesizeQueryResult(base64_audio=base64.b64encode(f.read()).decode())
+        return FileResponse('output.wav')
     except Exception as e:
         return SynthesizeQueryResult(result='failed', detail=str(e))
 
@@ -43,8 +43,7 @@ def synthesize_long(query: SynthesizeLongQuery):
         data = (generate_audio_from_long_text(query.text, query.prompt_name, query.lang, query.accent, query.mode) * 32767).astype(np.int16)
         write('output.wav', SAMPLE_RATE, data)
         logging.info(f'Time cost: {time.time() - t1}')
-        with open('output.wav', 'rb') as f:
-            return SynthesizeQueryResult(base64_audio=base64.b64encode(f.read()).decode())
+        return FileResponse('output.wav')
     except Exception as e:
         return SynthesizeQueryResult(result='failed', detail=str(e))
 
